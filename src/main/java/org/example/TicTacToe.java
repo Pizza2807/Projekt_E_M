@@ -1,8 +1,7 @@
 package org.example;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-public class Main {
+
+public class TicTacToe {
     private Player player1;
     private Player player2;
     private Player currentPlayer;
