@@ -22,6 +22,13 @@ public class TicTacToe {
         TicTacToe game = new TicTacToe();
     }
 
+    public void start() {
+        while (true) {
+            int x = getInput("Enter x coordinate: ");
+            int y = getInput("Enter y coordinate: ");
+            if (board.isCellEmpty(x, y)) {
+                board.place(x, y, currentPlayer.getMarker());
+
 
 
     private void displayCurrentTurn() {
