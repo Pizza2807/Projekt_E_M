@@ -20,9 +20,11 @@ public class TicTacToe {
 
     public static void main(String[] args) {
         TicTacToe game = new TicTacToe();
+        game.start();
     }
 
     public void start() {
+        resetGame();
         while (true) {
             board.print();
             displayCurrentTurn();
@@ -33,23 +35,43 @@ public class TicTacToe {
                 if (hasWinner()) {
                     board.print();
                     System.out.println("Player " + currentPlayer.getMarker() + " wins!");
-                    if
+                    if (playAgain()) {
+                        resetGame();
+                    } else {
+                        break;
+                    }
                 } else if (board.isFull()) {
                     board.print();
                     System.out.println("It's a draw!");
+                    if (playAgain()) {
+                        resetGame();
+                    } else {
+                        break;
+                    }
+                } else {
+                    switchCurrentPlayer();
+                }
             } else {
                 System.out.println("Cell is already occupied. Try again!");
             }
         }
     }
 
-
-
     private void displayCurrentTurn() {
         System.out.println("It's " + currentPlayer.getMarker() + "'s turn.");
     }
 
 
+    private void resetGame() {
+        board.clear();
+        currentPlayer = player1;
+    }
+
+    private boolean playAgain() {
+        System.out.println("Do you want to play again? (yes/no)");
+        String response = scanner.next();
+        return response.equalsIgnoreCase("yes");
+    }
 
     private void switchCurrentPlayer() {
         currentPlayer = (currentPlayer == player1) ? player2 : player1;
@@ -57,20 +79,21 @@ public class TicTacToe {
 
 
     private boolean hasWinner() {
+        // Check rows
         for (int i = 0; i < 3; i++) {
             if (board.cells[i][0] == board.cells[i][1] && board.cells[i][1] == board.cells[i][2] && board.cells[i][0]!= '-') {
                 return true;
             }
         }
 
-
+        // Check columns
         for (int i = 0; i < 3; i++) {
             if (board.cells[0][i] == board.cells[1][i] && board.cells[1][i] == board.cells[2][i] && board.cells[0][i]!= '-') {
                 return true;
             }
         }
 
-
+        // Check diagonals
         if ((board.cells[0][0] == board.cells[1][1] && board.cells[1][1] == board.cells[2][2] && board.cells[0][0]!= '-')
                 || (board.cells[0][2] == board.cells[1][1] && board.cells[1][1] == board.cells[2][0] && board.cells[0][2]!= '-')) {
             return true;
@@ -91,7 +114,7 @@ public class TicTacToe {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.next();
+                scanner.next(); // discard invalid input
             }
         }
     }
