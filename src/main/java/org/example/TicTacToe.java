@@ -24,10 +24,12 @@ public class TicTacToe {
 
     public void start() {
         while (true) {
+            board.print();
             int x = getInput("Enter x coordinate: ");
             int y = getInput("Enter y coordinate: ");
             if (board.isCellEmpty(x, y)) {
                 board.place(x, y, currentPlayer.getMarker());
+            }
 
 
 
