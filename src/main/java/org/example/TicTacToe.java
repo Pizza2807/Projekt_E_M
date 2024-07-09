@@ -25,11 +25,23 @@ public class TicTacToe {
     public void start() {
         while (true) {
             board.print();
+            displayCurrentTurn();
             int x = getInput("Enter x coordinate: ");
             int y = getInput("Enter y coordinate: ");
             if (board.isCellEmpty(x, y)) {
                 board.place(x, y, currentPlayer.getMarker());
+                if (hasWinner()) {
+                    board.print();
+                    System.out.println("Player " + currentPlayer.getMarker() + " wins!");
+                    if
+                } else if (board.isFull()) {
+                    board.print();
+                    System.out.println("It's a draw!");
+            } else {
+                System.out.println("Cell is already occupied. Try again!");
             }
+        }
+    }
 
 
 
