@@ -1,0 +1,34 @@
+name: CD to Artifact Repository
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Build with Maven
+      run: mvn clean package
+
+    - name: Upload JAR as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: tictactoe
+        path: target/tictactoe-1.0-SNAPSHOT.jar
+
+    - name: Deploy to Server
+      run: |
+        curl -T target/tictactoe-1.0-SNAPSHOT.jar https://your-artifact-repo.com/upload
+      env:
+        ARTIFACT_REPO_TOKEN: ${{ secrets.ARTIFACT_REPO_TOKEN }}
